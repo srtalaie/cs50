@@ -1,1 +1,1 @@
-#Repo for CS50 exercises
+##Repo for CS50 exercises
