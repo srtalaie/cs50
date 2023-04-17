@@ -20,7 +20,6 @@
 	- A Byte is 8 bits (########)
 		- ex/ 00000000 = 0, 11111111 = 255
 
-
 ## Representation
 - Computers can represent characters such as 'A' as 65 or in binary as 01000001
 - ASCII is a mapping between characters and numbers
