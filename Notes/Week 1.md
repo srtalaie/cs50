@@ -84,4 +84,33 @@ else
 ```
 
 ## Loops & Variables
-- 
+```
+int counter = 0;
+//Each is a way to increment by 1
+counter = counter + 1;
+counter += 1;
+counter++;
+
+//Each is a way to decrement by 1
+counter = counter - 1;
+counter -= 1;
+counter--;
+```
+- Initialize variable with type, when you update the variable you do not need to include the type
+```
+int counter = 3;
+while (counter > 0)
+{
+	printf("meow\n");
+	counter = counter - 1;
+}
+```
+- While loop, loops while condition is still met
+- Loop will print meow to console 3 times. Each iteration of loop it will check counter to see if the condition is met (counter being greater than 0 still), if condition is met then "meow" will be printed to the console.
+```
+for (int i = 0; i < 3; i++)
+{
+	printf("meow\n");
+}
+```
+- For loop does the same as above but it consolidates most of the logic to the beginning of the loop
