@@ -114,3 +114,136 @@ for (int i = 0; i < 3; i++)
 }
 ```
 - For loop does the same as above but it consolidates most of the logic to the beginning of the loop
+
+## Command Line commands
+- cd - change directory, used to change the current directory, needs to be paired with the path
+- ls - list, lists all of the files/directories in the current directory
+- mv - move, move contents of a file into a new file  ```
+mv [current location] [location you wish to ove it to]
+- cp - copy a file
+- mkdir - make a directory
+- rm - remove a file
+- rmdir - remove a directory
+
+## Do While Loops
+```
+	int n;
+	do
+	{
+		n = get_int("Size: ");
+	}
+	while (n < 1);
+```
+- Loop will run until the while conditional is met
+
+## Nested Loops
+```
+#include <cs50.h>
+#include <stdio.h>
+
+int main(void) 
+{
+	int n;
+	do
+	{
+		n = get_int("Size: ");
+	}
+	while (n < 1);
+	
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+			printf('#');
+		}
+		
+		printf("\n");
+	}
+}
+
+
+
+/* Output if user assigns 3 to n:
+	###
+	###
+	###
+*/
+```
+- Before the outer loop iterates once, the inner loop will iterate once
+
+## Comments
+- Notes you write that explain what your code is doing
+
+## Abstraction
+- Comments can be a good way to start a program, gives you a high level solution
+```
+#include <stdio.h>
+
+int get_size(void);
+void print_grid(int size);
+
+int main(void)
+{
+	//Get size of grid
+	int n = get_size();
+	
+	//Print grid of bricks
+	print_grid(n);
+}
+
+int get_size(void)
+{
+	int n;
+	do
+	{
+		n = get_int("Size: ");
+	}
+	while (n < 1);
+	return n;
+}
+
+void print_grid(int size)
+{
+	for (int i = 0; i < size; i++)
+	{
+		for (int j = 0; j < size; j++)
+		{
+			printf('#');
+		}
+		printf("\n");
+	}
+}
+```
+- When wiriting functions you right the output format first, in the get_size function case it is an int and in the parentheses any input, if none you write void. Return is the keyword that is used that will return whatever is after the keyword as the output for the function.
+- When writing void as the type of the output you are declaring that the function will do something, but not return any value
+- Including the function names outside of main but before it lets compilier know that the functions will be declared in the file but after main
+- Abstraction is the process of only showing the necessary details to the user and hiding the other details in the background
+	- In this case it is declaring the functions at the bottom
+
+## Integer Overflow
+- Computer only has a finite amount of memory (RAM)
+- Limitation on how high you can count because of this
+- Smallest amount the computer can represent is 32 0's which equals 0
+- Biggest would be 32 1's which equals 4294967295
+- But because you need negative numbers than an int can only represent -2147483648 to 2147483647
+- A situation when you run out of bits is **integer overflow**
+- Solution is to use long which allocates more memory to represent the number
+
+## Truncation
+- When working with numbers with decimals you may truncate the value, meaning you lose everything after the decimal
+- Solution is to use floating point values or **floats**
+
+## Type Casting
+- Converting one data type to another by explicitly telling the compilier you want to do so
+```
+long x = get_long("x: ");
+long y = get_long("y: ");
+
+float z = (float) x / (float) y;
+printf("%f\n", z)
+```
+
+## Floating-point Impercesion
+- Using a finite amount of memory, you will not be able to represent how percise numbers can be because there is a boundary
+- When dealing with a decimal that repeats the computer just gives the closets approximation it can
+- **Double** will use twice as many bits as a float but still suffers from the impercesion
