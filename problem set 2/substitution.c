@@ -23,10 +23,9 @@ int main(int argc, string argv[])
   check_input(argv[1]);
 
   string plaintext = get_string("plaintext: ");
-  string upper_plaintext = convert_text_to_upper(plaintext);
   string upper_key = convert_text_to_upper(argv[1]);
 
-  string ciphertext = convert_text(upper_plaintext, upper_key);
+  string ciphertext = convert_text(plaintext, upper_key);
   printf("ciphertext: %s\n", ciphertext);
 }
 
@@ -60,17 +59,32 @@ string convert_text(string plaintext, string key)
   {
     for (int j = 0, alpha_len = strlen(alphabet); j < alpha_len; j++)
     {
-      if (plaintext[i] == alphabet[j])
+      if (toupper(plaintext[i]) == alphabet[j])
       {
-        ciphertext[i] = key[j];
+        if (islower(plaintext[i]))
+        {
+          ciphertext[i] = tolower(key[j]);
+        }
+        else
+        {
+          ciphertext[i] = key[j];
+        }
       }
       else if (ispunct(plaintext[i]) || isspace(plaintext[i]))
       {
         ciphertext[i] = plaintext[i];
       }
+      else if (isdigit(plaintext[i]))
+      {
+        ciphertext[i] = plaintext[i];
+      }
+      else if (plaintext[i] == '\0')
+      {
+        ciphertext[i] = '\0';
+      }
     }
   }
-  string message = strncpy(plaintext, ciphertext, strlen(ciphertext));
+  string message = strncpy(plaintext, ciphertext, strlen(plaintext));
   return message;
 }
 
