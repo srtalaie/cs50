@@ -3,51 +3,44 @@
 #include <stdio.h>
 #include <string.h>
 
-int check_input(string input);
 string convert_text_to_upper(string input);
+int check_key_length(string input);
+int check_key_alpha_char(string input);
+int check_key_duplicates(string input);
 string convert_text(string plaintext, string key);
 
 int main(int argc, string argv[])
 {
   if (!argv[1])
   {
-    printf("Please provide a key containing 26 characters");
+    printf("Please provide a key containing 26 characters.\n");
     return 1;
   }
   else if (argc > 2)
   {
-    printf("Please provide 1 key containing 26 characters");
+    printf("Please provide 1 key containing 26 characters.\n");
     return 1;
   }
-
-  check_input(argv[1]);
+  else if (check_key_length(argv[1]) == 1)
+  {
+    printf("Key must contain 26 characters.\n");
+    return 1;
+  }
+  else if (check_key_alpha_char(argv[1]) == 1)
+  {
+    printf("All characters in the key must be alpha characters.\n");
+    return 1;
+  }
+  else if (check_key_duplicates(argv[1]) == 1)
+  {
+    printf("All characters in the key must be unique.\n");
+    return 1;
+  }
 
   string plaintext = get_string("plaintext: ");
   string upper_key = convert_text_to_upper(argv[1]);
-
   string ciphertext = convert_text(plaintext, upper_key);
   printf("ciphertext: %s\n", ciphertext);
-}
-
-int check_input(string input)
-{
-  int input_len = strlen(input);
-
-  if (input_len > 26)
-  {
-    printf("Key must contain 26 characters");
-    return 1;
-  }
-
-  for (int i = 0; i < input_len; i++)
-  {
-    if (!isalpha(input[i]))
-    {
-      printf("All characters in the key must be alpha characters.");
-      return 1;
-    }
-  }
-  return 1;
 }
 
 string convert_text(string plaintext, string key)
@@ -103,6 +96,51 @@ string convert_text_to_upper(string text)
       upper_string[i] = text[i];
     }
   }
-
   return strncpy(text, upper_string, strlen(text));
+}
+
+int check_key_length(string input)
+{
+  int return_value = 0;
+  int input_len = strlen(input);
+
+  if (input_len > 26 || input_len < 26)
+  {
+    return_value = 1;
+  }
+  return return_value;
+}
+
+int check_key_alpha_char(string input)
+{
+  int return_value = 0;
+  int input_len = strlen(input);
+
+  for (int i = 0; i < input_len; i++)
+  {
+    if (!isalpha(input[i]))
+    {
+      return_value = 1;
+    }
+  }
+  return return_value;
+}
+
+int check_key_duplicates(string input)
+{
+  int key_length = strlen(input);
+  string upper_key = convert_text_to_upper(input);
+  int return_value = 0;
+
+  for (int i = 0; i < key_length - 1; i++)
+  {
+    for (int j = i + 1; j < key_length; j++)
+    {
+      if (input[i] == input[j])
+      {
+        return_value = 1;
+      }
+    }
+  }
+  return return_value;
 }
