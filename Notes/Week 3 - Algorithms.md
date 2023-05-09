@@ -181,4 +181,70 @@ Repeat n - 1 times
 - [Comparing Sorting Algorithms Visualizer](https://www.cs.usfca.edu/~galles/visualization/ComparisonSort.html)
 
 ## Recursion
-- 
+- Ability of a function to call itself
+```
+#include <cs50.h>
+#include <stdio.h>
+
+void draw(int n);
+
+int main(void)
+{
+	int height = get_int("Height: ");
+	draw(height);
+}
+
+void draw(int n)
+{
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < i + 1; j++)
+		{
+			printf("#");
+		}
+		printf("\n");
+	}
+}
+```
+- Implemented with recursion:
+```
+#include <cs50.h>
+#include <stdio.h>
+
+void draw(int n);
+
+int main(void)
+{
+	int height = get_int("Height: ");
+	draw(height);
+}
+
+void draw(int n)
+{
+	if (n <= 0)
+	{
+		return;
+	}
+	
+	draw(n - 1);
+
+	for (int i = 0; i < n; i++)
+	{
+		printf("#");
+	}
+	printf("\n");
+}
+```
+
+## Merge Sort
+- Sorting using recursion 
+```
+If only on number
+	Quit
+Else
+	Sort left half of numbers
+	Sort right half of numbers
+	Merge sorted halves
+```
+- **O(n log n)** upper bound, lower boudn **Ω(n log n)**. Therefore **Θ(n log n)**.
+- If you want to save time you must sacrifice space, in the case of merge sort because you need another array to hold the other half
