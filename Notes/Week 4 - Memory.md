@@ -484,4 +484,202 @@ t: Hi!
 ```
 
 ## Valgrind
-- 
+- Debug tool for memory, you run it on a program you have already compiled
+```
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void)
+{
+	int *x = malloc(3 * sizeof(int));
+	x[1] = 72;
+	x[2] = 73;
+	x[3] = 74;
+}
+
+$ make memory
+$ valgrind ./memory
+```
+- Running **Valgrind** in the above will display an error because ```x[3] = 72;``` is accessing memory that you have not allocated.
+- The other error displayed is in regards to a memory leak because you have not freed the memory after use. So to fix both errors:
+```
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void)
+{
+	int *x = malloc(3 * sizeof(int));
+	
+	//Added check to make memory is allocated
+	if (x == NULL)
+	{
+		return 1;
+	}
+	
+	//Fixed to correct indexes
+	x[0] = 72;
+	x[1] = 73;
+	x[2] = 74;
+
+	//Freed memory to stop memory leaks
+	free(x)
+	return 0;
+}
+```
+- Running **Valgrind** on the above will show no errors
+
+## Garbage Values
+- If you do not initialize a variable or array, there will be garbage values in the variable or array. Remnants of  memory you have used before.
+- Always initialize variables to something to avoid **garbage values**
+
+## Swap
+```
+#include <stdio.h>
+#include <stdlib.h>
+
+void swap(int a, int b)
+
+int main(void)
+{
+	int x = 1;
+	int y = 2;
+	
+	printf("x is %i, y is %i\n", x, y);
+	swap(x, y);
+	printf("x is %i, y is %i\n", x, y);
+}
+
+//Will not work!!!!
+void swap(int a, int b)
+{
+	int tmp = a;
+	a = b;
+	b = tmp;
+}
+
+//Output
+$./swap
+x is 1, y is 2
+x is 1, y is 2
+```
+- Does not work because you are passing x and y as values and not reference. So you are not actually changing the values at x and y. This is an issue of **Scope** a and b only exist in the context of the function.
+- When functions are called in C in memory the following is called:
+	  **Machine Code** - your code
+	  **globals** - your global variables
+	  **heap** - free space of memory that can be taken from. Starts from top moves down.
+	  **stack** - where function and variables are stored. Fills from bottom moves up with memory allocated from the heap.
+```
+#include <stdio.h>
+#include <stdlib.h>
+
+void swap(int *a, int *b);
+
+int main(void)
+{
+	int x = 1;
+	int y = 2;
+	
+	printf("x is %i, y is %i\n", x, y);
+	swap(&x, &y);
+	printf("x is %i, y is %i\n", x, y);
+}
+
+void swap(int *a, int *b)
+{
+	int tmp = *a;
+	*a = *b;
+	*b = tmp;
+}
+
+//Output
+$./swap
+x is 1, y is 2
+x is 2, y is 1
+```
+- In the new swap function changing the arguments to addresses allows you to access and change the values of x and y
+
+## Overflow
+- **Heap Overflow** - touch memory in the heap that is not there
+- **Stack Overflow** - touch memory in the stack that is not there
+- Both are example of  **Buffer Overflow**
+
+## scanf
+- Built in C function that accepts keyboard input
+```
+#include <stdio.h>
+
+int main(void)
+{
+	int x;
+	
+	//Prompt user to enter int value
+	printf("x: ");
+	
+	//Accepts user input and assigns value in       //memory to x
+	scanf("%i", &x);
+
+	printf("x: %i\n", x);
+}
+```
+- scanf is harder for strings because you do not know how long the user input will be
+```
+#include <stdio.h>
+
+int main(void)
+{
+	char *s = NULL;
+	
+	//Prompt user to enter string value
+	printf("s: ");
+	
+	//s is already an address so no & needed
+	scanf("%s", s);
+
+	printf("s: %s\n", s);
+}
+```
+- Though s is initialized to NULL there is nowhere in memory allocated for the letters the user puts in
+```
+#include <stdio.h>
+
+int main(void)
+{
+	char s[4];
+	
+	//Prompt user to enter string value
+	printf("s: ");
+	
+	//s is already an address so no & needed
+	scanf("%s", s);
+
+	printf("s: %s\n", s);
+}
+```
+- Above now works because you have allocated the memory to store the user input.
+
+## Phonebook
+```
+//Saves names and numbers to a csv file
+
+#include <cs50.h>
+#include <stdio.h>
+#include <string.h>
+
+int main(void)
+{
+	FILE *file = fopen("phonebook.csv", "a");
+	
+	string name = get_string("Name: ");
+	string number = get_string("Number: ");
+
+	fprintf(file, "%s,%s\n", name, number);
+
+	fclose(file);
+}
+
+$ ./phonebook
+Name: Shane Spain
+Number: 800-867- 5309
+
+//Writes to phonebook.csv with the user's input
+```
