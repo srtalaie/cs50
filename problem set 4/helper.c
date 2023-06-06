@@ -1,6 +1,8 @@
 #include "helpers.h"
 #include <math.h>
 
+void swap_pixels(RGBTRIPLE *left_pixel, RGBTRIPLE *right_pixel);
+
 // Convert image to grayscale
 void grayscale(int height, int width, RGBTRIPLE image[height][width])
 {
@@ -57,6 +59,15 @@ void sepia(int height, int width, RGBTRIPLE image[height][width])
 // Reflect image horizontally
 void reflect(int height, int width, RGBTRIPLE image[height][width])
 {
+  for (int i = 0; i < height; i++)
+  {
+    for (int j = 0, last_pixel = (width - 1); j < width / 2; j++)
+    {
+      swap_pixels(&image[i][j], &image[i][last_pixel]);
+      last_pixel--;
+    }
+  }
+
   return;
 }
 
@@ -64,4 +75,11 @@ void reflect(int height, int width, RGBTRIPLE image[height][width])
 void blur(int height, int width, RGBTRIPLE image[height][width])
 {
   return;
+}
+
+void swap_pixels(RGBTRIPLE *left_pixel, RGBTRIPLE *right_pixel)
+{
+  RGBTRIPLE temp = *left_pixel;
+  *left_pixel = *right_pixel;
+  *right_pixel = temp;
 }
