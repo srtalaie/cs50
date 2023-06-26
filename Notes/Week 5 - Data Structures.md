@@ -138,5 +138,120 @@ int main(void)
 }
 ```
 
+##  **Operators**:
+- **struct** - lets us build a structure in memory
+-  **.** - dot operator let's you go into a struct to access its variables
+-  **\***-  star operator used to declare pointers, and dereference them
+- When you want to use a dot and star together you use '**->**'
+
 ## Linked Lists
+- **Linked Lists** - allow you to stitch together values in memory
+- **Node** - container in code for storing values
+	- Because node contains a reference to itself within it's typedef you must include the name after ```struct``` as well as in the reference for the data type of ```*next```
+```
+typedef sturct node
+{
+	int number;
+	struct node *next;
+}
+node;
+```
+- With nodes you can easily add new nodes to the linked list. Downside being you use twice as much memory than you would if you use a traditional array. Also you can not index into it  because the list is not contiguous, thus sacrificing **Binary-Search**
+```
+typedef sturct node
+{
+	int number;
+	struct node *next;
+}
+node;
+
+//Initialize an empty linked list of 0
+node *list = NULL;
+
+//Returns an address for variable n which is a node
+node *n = malloc(sizeof(node));
+
+//Sets the number at n to 1 and next to NULL
+n->number = 1;
+n->next = NULL;
+
+//List is pointing at the first node
+list = n;
+
+//Create a new node that will hold the 2nd value
+node *n = malloc(sizeof(node));
+
+//Sets the number at n to 2 and next to list which points to 1
+n->number = 2;
+n->next = list;
+
+//List now points to 2 which contains the link to 1 in 2's next field
+list = n;
+```
+
+```
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef sturct node
+{
+	int number;
+	struct node *next;
+}
+node;
+
+int maind(int argc, char *argv[])
+{
+	node *list = NULL;
+
+	//Start at 1 because 1st arg is the program name
+	for (int i = 1; i < argc; i++)
+	{
+		//Convert string to number
+		int number = atoi(argv[i]);
+
+		node *n = malloc(sizeof(node));
+		if (n == NULL)
+		{
+			return 1;
+		}
+		n->number = number;
+		n->next = NULL;
+
+		n->next = list;
+		list = n;
+	}
+
+	//Pointer pointing at the first node of the list
+	node *ptr = list;
+
+	while (ptr != NULL)
+	{
+		printf("%i\n", ptr->number);
+		ptr = ptr->next;
+	}
+
+	//Reset to beginning of list
+	ptr = list;
+
+	//Free up the nodes in memory
+	while (ptr != NULL)
+	{
+		node *ptr = ptr->next;
+		free(ptr);
+		ptr = next;
+	}
+}
+
+//Ouput:
+$ ./list 1 2 3
+3
+2
+1
+```
+- Using linked lists searching is O(n) while insertion is O(1) w/prepending nodes
+- Using linked lists searching is O(n) while insertion is O(n) w/appending nodes
+- Using linked lists with sorted order is O(n) while insertion is O(n)
+
+## Trees
 - 
