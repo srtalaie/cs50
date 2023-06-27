@@ -138,7 +138,7 @@ int main(void)
 }
 ```
 
-##  **Operators**:
+## **Operators**:
 - **struct** - lets us build a structure in memory
 -  **.** - dot operator let's you go into a struct to access its variables
 -  **\***-  star operator used to declare pointers, and dereference them
@@ -254,4 +254,73 @@ $ ./list 1 2 3
 - Using linked lists with sorted order is O(n) while insertion is O(n)
 
 ## Trees
-- 
+- **Binary Search Trees** - allows you to use binary search on a linked list. Modeled in 2 dimensions (x and y axis).
+	- In order for it to work though the nodes to the left must be less than the parent and the nodes to the right must be larger i.e. **Balanced**
+```
+//Binary Search Tree
+typedef struct node
+{
+	int number;
+	struct node *left;
+	struct node *right;
+}
+node;
+
+//Function that traverses tree to find given number
+bool search(node *tree, int number)
+{
+	if (tree == NULL)
+	{
+		return false;
+	}
+	else if (number < tree->number)
+	{
+		return search(tree->left, number);
+	}
+	else if (number > tree->number)
+	{
+		return search(tree->right, number);
+	}
+	else if (number == tree->number)
+	{
+		return true;
+	}
+}
+```
+
+## Dictionaries
+- Combination of key/value pairs
+	- **Key** - what you use to look for some info
+	- **Value** - the actual info represented by the key
+- With key/value pairs search is still O(1), i.e. it is constant. The time to solve the problem is not dependent on the size itself.
+
+## Hashing
+- **Hashing** - taking input of some value, and outputting something simpler
+- **Hash Function** - the algorithm or code that hashes a problem
+- **Hash Table** - application of both arrays and linked lists
+```
+typedef struct node
+{
+	char *name;
+	char *number;
+	struct node *next;
+}
+node;
+
+//Hash table
+node *table[26];
+```
+
+## Tries
+- short for **Retrieval**
+- **Tries** - a tree whose nodes are arrays
+```
+typedef struct node
+{
+	char *number;
+	struct node *children[26];
+}
+node;
+
+node *trie;
+```
