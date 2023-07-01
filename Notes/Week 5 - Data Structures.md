@@ -200,7 +200,7 @@ typedef sturct node
 }
 node;
 
-int maind(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
 	node *list = NULL;
 
