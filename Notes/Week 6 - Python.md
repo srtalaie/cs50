@@ -313,3 +313,247 @@ for i in range(3):
 ```
 
 ## Scores (python)
+```
+scores = [72, 73, 33]
+
+average = sum(scores) / len(scores)
+
+print(f"Avg: {average}")
+```
+
+```
+from cs50 import get_int
+
+//Get scores from user input
+scores = []
+
+for i in range(3):
+	score = get_int("Score: ")
+	scores.append(score)
+
+average = sum(scores) / len(scores)
+print(f"Average: {average}")
+```
+
+## Uppercase (python)
+```
+before = input("Before: ")
+print("After: ", end="")
+for c in before
+	print(c.upper(), end="")
+print()
+
+
+//Output
+Before: david
+After: DAVID
+```
+
+```
+before = input("Before: ")
+after = before.upper()
+print(f"After: {after}")
+
+
+//Output
+Before: david
+After: DAVID
+```
+
+## Greet (python)
+```
+from sys import argv
+
+if len(argv) == 2:
+	print(f"hello, {argv[1]}")
+else:
+	print("hello, world")
+
+//Console
+$ python greet.py
+hello, world
+$ python greet.py David
+hello, David
+```
+
+## Exit Status
+```
+import sys
+
+if len(sys.argv) !=2:
+	print("Missing command-line argument")
+	sys.exit(1)
+else
+	print(f"hello, {sys.argv[1]}")
+sys.exit(0)
+
+
+//Console
+$ python exit.py
+Missing command-line argument
+$ echo $?
+1
+$ python exit.py David
+hello, David
+$ echo $?
+0
+```
+
+## Search (python)
+```
+import sys
+
+names = ["Bill", "Charlie", "Ginny", "Fred", "George", "Percy", "Ron"]
+
+name = input("Name: ")
+
+for n in names:
+	if name == n:
+		print("Found")
+		sys.exit(0)
+print("Not Found")
+sys.exit(1)
+
+//Console
+$ python names.py
+Name: Ron
+Found
+$ python names.py
+Name: Hermione
+Not Found
+```
+
+```
+import sys
+
+names = ["Bill", "Charlie", "Ginny", "Fred", "George", "Percy", "Ron"]
+
+name = input("Name: ")
+
+for name in names:
+	print("Found")
+	sys.exit(0)
+print("Not Found")
+sys.exit(1)
+
+//Console
+$ python names.py
+Name: Ron
+Found
+$ python names.py
+Name: Hermione
+Not Found
+```
+
+## Phonebook (python)
+```
+//Create a dictionary for people
+people = {
+	"Carter": "+1-617-495-1000",
+	"David": "+1-949-468-2750"
+}
+
+name = input("Name: ")
+
+if name in people:
+	number = people[name]
+	print(f"Number: {number}")
+
+
+
+//Console
+$ python phonebook.py
+Name: Carter
+Number: +1-617-495-1000
+```
+
+## Compare String (python)
+```
+input("s: ")
+input("t: ")
+
+if s == t:
+	print("Same")
+else:
+	print("Different")
+
+
+//Console
+$ python compare.py
+s: cat
+t: cat
+Same
+$ python compare.py
+s: cat
+t: dog
+Different
+```
+- 2 same strings in C were different because they were in different locations of memory. In python this taken care of behind the scenes so the strings are compared character by character
+
+## Swap (python)
+```
+x = 1
+y = 2
+
+print(f"x is {x}, y is {y}")
+x, y = y, x
+print(f"x is {x}, y is {y}")
+
+//Console
+$ python swap.py
+x is 1, y is 2
+x is 2, y is 1
+```
+
+## CSV (python)
+phonebook.csv
+```
+name,number
+```
+
+phonebook.py
+```
+import csv
+
+//Open file in append mode, and close after operations
+with open("phonebook.csv", "a") as file:
+
+	name = input("Name: ")
+	number = input("Number: ")
+	
+	//Will format for writing to csv file
+	writer = csv.DictWriter(file, fieldnames=["name", "number"])
+	writer.writerow(["name": name, "number": number])
+
+
+//Console
+$ python phonebook.py
+Name: David
+Number: +1-949-468-2750
+
+//phonebook.csv
+name,number
+David,+1-949-468-2750
+```
+
+## Speech (python)
+```
+import pyttsx3
+
+engine = pyttsx3.init()
+name = input("Name: ")
+engine.say(f"hello, {name}")
+engine.runAndWait()
+```
+
+## QR Code (python)
+```
+import os
+import qrcode
+
+image = qrcode.make("https://youtu.be/xvFZjo5PgG0")
+
+image.save("qr.png", "PNG")
+
+os.system("open qr.png")
+```
