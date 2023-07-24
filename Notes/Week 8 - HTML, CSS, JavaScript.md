@@ -21,6 +21,7 @@
     - **file.html** - the content in that folder that is being accessed at the address
   - **HTTP** uses english verbs to tell the computer what to do with the information that is being sent or is being hosted on the server ex/ GET or POST
 - [Status Codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)
+- HTTP Server is just a program that responds to **requests** with **responses**
 
 ## curl
 
@@ -38,5 +39,20 @@ GET /search?q=cats
 
 ## HTML
 - **HyperText Markup Language (HTML)** - languages in which web pages themselves are written. Not a programming language itself. 2 important features:
-	- **Tags** - 
-	- **Attributes** - 
+	- **Tags** - building blocks of html, keywords on a web page that define how your web browser must format and display your web page
+	- **Attributes** - provide additional information about elements
+
+## Document Object Model (DOM)
+- **Document Object Model (DOM)** - A programming interface for web documents. It represents the page so that programs can change the document structure, style, and content. The DOM represents the document as nodes and objects; that way, programming languages can interact with the page.
+
+## Meta
+- Key/Value pairs utilized for SEO
+
+## CSS
+- **Cascading Style Sheets (CSS)** - Used to style web pages like fonts, colors, etc.
+
+## Frameworks
+- A set of resources and tools for software developers to build and manage web applications, web services and websites, as well as to develop application programming interfaces (APIs)
+
+## JavaScript
+- 
