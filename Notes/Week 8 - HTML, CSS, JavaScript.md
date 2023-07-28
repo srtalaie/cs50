@@ -55,4 +55,118 @@ GET /search?q=cats
 - A set of resources and tools for software developers to build and manage web applications, web services and websites, as well as to develop application programming interfaces (APIs)
 
 ## JavaScript
-- 
+- Programming language, supports conditionals, loops, variables, etc.
+- Built for the web
+
+## Greet
+```
+<!DOCTYPE html>
+
+<html lang="en">
+	<head>
+		<script>
+
+			function greet()
+			{
+				let name = document.querySelector('#name').value;
+				alert(`Hello, ${name}`);
+			}
+
+		</script>
+		<title>
+			hello, title
+		</title>
+	</head>
+	<body>
+		<form onsubmit="greet(); return false;">
+			<input autocomplete="off" autofocus placeholder="NAME" type="text" id="name">
+			<button type="submit">Greet</button>
+		</form>
+	</body>
+</html>
+```
+
+Cleaner Version:
+```
+<!DOCTYPE html>
+
+<html lang="en">
+	<head>
+		<title>
+			hello, title
+		</title>
+	</head>
+	<body>
+		<form>
+			<input autocomplete="off" autofocus placeholder="NAME" type="text" id="name">
+			<button type="submit">Greet</button>
+		</form>
+		<script>
+			document.querySelector('form').addEventListener('submit', function(event){
+				let name = document.querySelector('#name').value;
+				alert(`hello, ${name}`);
+				event.preventDefault();
+			});
+		</script>
+	</body>
+</html>
+```
+- Order of operations loads the script before the html, so we are forced to add the script to the bottom of the code. Or you can do the following with a special event listener:
+```
+<!DOCTYPE html>
+
+<html lang="en">
+	<head>
+		<script>
+			document.addEventListener('DOMContentLoaded', function(){
+				document.querySelector('form').addEventListener('submit', function(event){
+					let name = document.querySelector('#name').value;
+					alert(`hello, ${name}`);
+					event.preventDefault();
+				});				
+			});
+		</script>
+		<title>
+			hello, title
+		</title>
+	</head>
+	<body>
+		<form>
+			<input autocomplete="off" autofocus placeholder="NAME" type="text" id="name">
+			<button type="submit">Greet</button>
+		</form>
+	</body>
+</html>
+```
+
+- Including the js from outside the html file:
+
+greet.html
+```
+<!DOCTYPE html>
+
+<html lang="en">
+	<head>
+		<script src="hello.js"></script>
+		<title>
+			hello, title
+		</title>
+	</head>
+	<body>
+		<form>
+			<input autocomplete="off" autofocus placeholder="NAME" type="text" id="name">
+			<button type="submit">Greet</button>
+		</form>
+	</body>
+</html>
+```
+hello.js
+```
+document.addEventListener('DOMContentLoaded', function(){
+	document.querySelector('form').addEventListener('submit', function(event){
+		let name = document.querySelector('#name').value;
+		alert(`hello, ${name}`);
+		event.preventDefault();
+	});				
+});
+```
