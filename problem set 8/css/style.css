@@ -9,3 +9,15 @@
 #card-row {
   margin: 10vh;
 }
+
+.table-header-text {
+  font-size: 3vh;
+}
+
+footer {
+  color: #b84c4c;
+}
+
+#submit-btn {
+  border: none;
+}
