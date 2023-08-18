@@ -1,4 +1,3 @@
-
 ## Linear Search
 - Search starting from left to right until search term is found
 ```

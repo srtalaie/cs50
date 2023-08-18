@@ -1,4 +1,3 @@
-
 ## Compilation & Interpretation
 - Python does not require compilation, where you convert the language to 0's and 1's
 - Python uses an interpreter, which is a program installed on the computer and interprets the code for you

@@ -1,4 +1,3 @@
-
 ## Abstract Data Types
 - Can represent anything, how you implement it is up to you
 

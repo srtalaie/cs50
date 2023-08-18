@@ -1,4 +1,3 @@
-
 ## Source Code
 - Code that the program wrote
 - Computers don't understand source code, only binary which is called **Machine Code** 

@@ -1,4 +1,3 @@
-
 ## Binary
 - Unary - system using a single symbol to solve a problem
 	- base -1 - 1, 2, 3, 4, 5...

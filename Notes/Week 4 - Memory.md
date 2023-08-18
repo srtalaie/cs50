@@ -1,4 +1,3 @@
-
 ## Memory
 - **Bit Map** -  type of image pattern of 0's and 1's
 
