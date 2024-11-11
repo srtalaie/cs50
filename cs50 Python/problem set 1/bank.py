@@ -11,7 +11,7 @@ greeting = user_input_array[0]
 greeting_array = [*greeting]
 first_letter = greeting_array[0]
 
-if greeting == "hello":
+if "hello" in greeting:
     print("$0")
 elif first_letter == "h":
     print("$20")
