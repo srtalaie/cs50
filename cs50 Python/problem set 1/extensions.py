@@ -4,8 +4,8 @@ user_input = input("File Name: ")
 user_input = user_input.strip().lower()
 
 # Separate string by '.' to get the file type that trails after the '.'
-user_input_arr = user_input.split(".")
-file_extension = user_input_arr[1]
+user_input_arr = user_input.rsplit(".", 1)
+file_extension = user_input_arr[-1]
 
 
 def file_ext_checker(file_ext):
