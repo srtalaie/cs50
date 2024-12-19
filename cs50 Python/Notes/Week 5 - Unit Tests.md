@@ -196,8 +196,5 @@ def test_default():
 def test_argument():
 	assert hello("David") == "hello, David"
 ```
-test/\_\_init__.py
-```
-```
-- Having this `__init__.py` in the folder tells python this folder `test` is a package which is a module or modules that are organized in a folder
+- `test/__init__.py` - Having this in the folder tells python this folder `test` is a package which is a module or modules that are organized in a folder
 - Now running `pytest test` will run all tests within that folder
