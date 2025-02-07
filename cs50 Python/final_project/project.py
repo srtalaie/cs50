@@ -114,14 +114,14 @@ def main():
 
 
 # Calculate Tax Owed on Income
-def income_calc(income: float, filing: dict, status: str) -> str:
+def income_calc(income: float, filing: list, status: str) -> str:
     """
     Calculate taxes owed on income based on status
 
     :param income: Income made, if married and filing jointly combined income
     :type income: float
-    :param filing: Dictionary containing tax brackets: rate at the bracket and the upper and lower bounds of the bracket
-    :type filing: dict
+    :param filing: List of dicionaries, each containing tax brackets: rate at the bracket and the upper and lower bounds of the bracket
+    :type filing: list
     :param status: Message provided describing marital status and filing status
     :type status: str
     :raise TypeError: Error raised if income is not a float, filing is not a dict, or status is not a string
