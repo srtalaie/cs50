@@ -72,6 +72,15 @@ parser.add_argument(
     type=float,
     required=True,
 )
+parser.add_argument(
+    "-c",
+    "-capital-gains",
+    default=0.0,
+    help="How much money you made through investments this year",
+    type=float,
+    required=False,
+)
+
 args = parser.parse_args()
 
 
@@ -127,9 +136,14 @@ def income_calc(income: float, filing: dict, status: str) -> str:
                     (income - filing[i]["upper_bound"]) * filing[i]["rate"]
                 ) * -1
                 total_owed += tax_amount
-        return f"Income: {income:.2f}\nTotal Owed: ${total_owed:.2f}\n{status}"
+        return f"{status}\nIncome: {income:.2f}\nTotal Owed: ${total_owed:.2f}\n"
     except TypeError:
         print("Please provide a valid value")
+
+
+# Calculate amount owed on capital gains
+def cap_gains_calc():
+    pass
 
 
 if __name__ == "__main__":
