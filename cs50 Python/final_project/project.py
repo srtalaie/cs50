@@ -47,21 +47,21 @@ HEAD_OF_HOUSEHOLD = [
 
 parser = argparse.ArgumentParser(description="Income Tax Calculator")
 parser.add_argument(
-    "-m",
-    "--married",
+    "-ms",
+    "--married_separate",
     help="Indicate if you are married",
     action="store_true",
 )
 parser.add_argument(
-    "-j",
-    "--joint",
+    "-mj",
+    "--married_joint",
     help="Indicate if you are filing jointly",
     action="store_true",
 )
 parser.add_argument(
     "-hh",
     "--head_of_household",
-    help="Indicate if you are filing jointly",
+    help="Indicate if you are filing as head of a household",
     action="store_true",
 )
 parser.add_argument(
@@ -70,6 +70,7 @@ parser.add_argument(
     default=0.0,
     help="Income, either alone or combined if joint filing",
     type=float,
+    required=True,
 )
 args = parser.parse_args()
 
@@ -78,10 +79,23 @@ def main():
     """Calculate User Provided Tax Burden"""
     while True:
         try:
-            income = args.income
-            joint_filing_status = args.joint
-            marital_status = args.married
-            head_of_household = args.head_of_household
+            filing = []
+            status = ""
+            if args.married_joint:
+                status = "Marital Status: Married\nFiling: Jointly"
+                filing = MARRIED_JOINTLY
+            elif args.married_separate:
+                status = "Marital Status: Married\nFiling: Separately"
+                filing = MARRIED_SEPARATELY
+            elif args.head_of_household:
+                status = "Marital Status: Unmarried \nFiling: Having Dependents"
+                filing = HEAD_OF_HOUSEHOLD
+            else:
+                status = "Marital Status: Unmarried\nFiling: Individual, No Dependents"
+                filing = SINGLE_FILING
+
+            print(income_calc(args.income, filing, status))
+            break
         except ValueError:
             sys.exit("Please provide a valid integer as income.")
         except EOFError:
@@ -90,8 +104,32 @@ def main():
             sys.exit("Something went wrong :(")
 
 
-def income_calc(income, filing):
-    pass
+# Calculate Tax Owed on Income
+def income_calc(income: float, filing: dict, status: str) -> str:
+    """
+    Calculate taxes owed on income based on status
+
+    :param income: Income made, if married and filing jointly combined income
+    :type income: float
+    :param filing: Dictionary containing tax brackets: rate at the bracket and the upper and lower bounds of the bracket
+    :type filing: dict
+    :param status: Message provided describing marital status and filing status
+    :type status: str
+    :raise TypeError: Error raised if income is not a float, filing is not a dict, or status is not a string
+    :return: A string containing the income, status, and taxes owed
+    :rtype: str
+    """
+    total_owed = 0.0
+    try:
+        for i in range(len(filing)):
+            if filing[i]["lower_bound"] < income < filing[i]["upper_bound"]:
+                tax_amount = (
+                    (income - filing[i]["upper_bound"]) * filing[i]["rate"]
+                ) * -1
+                total_owed += tax_amount
+        return f"Income: {income:.2f}\nTotal Owed: ${total_owed:.2f}\n{status}"
+    except TypeError:
+        print("Please provide a valid value")
 
 
 if __name__ == "__main__":
