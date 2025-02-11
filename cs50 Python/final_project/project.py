@@ -74,7 +74,7 @@ parser.add_argument(
 )
 parser.add_argument(
     "-c",
-    "-capital-gains",
+    "--capital_gains",
     default=0.0,
     help="How much money you made through investments this year",
     type=float,
@@ -103,10 +103,16 @@ def main():
                 status = "Marital Status: Unmarried\nFiling: Individual, No Dependents"
                 filing = SINGLE_FILING
 
-            print(income_calc(args.income, filing, status))
+            income_owed = income_calc(args.income, filing)
+            cap_gains_owed = cap_gains_calc(args.capital_gains)
+            print(
+                message_crafter(
+                    args.income, args.capital_gains, income_owed, cap_gains_owed, status
+                )
+            )
             break
         except ValueError:
-            sys.exit("Please provide a valid integer as income.")
+            sys.exit("Please provide a valid dollar amount as income.")
         except EOFError:
             sys.exit()
         except ZeroDivisionError:
@@ -114,7 +120,7 @@ def main():
 
 
 # Calculate Tax Owed on Income
-def income_calc(income: float, filing: list, status: str) -> str:
+def income_calc(income: float, filing: list) -> str:
     """
     Calculate taxes owed on income based on status
 
@@ -124,26 +130,71 @@ def income_calc(income: float, filing: list, status: str) -> str:
     :type filing: list
     :param status: Message provided describing marital status and filing status
     :type status: str
-    :raise TypeError: Error raised if income is not a float, filing is not a dict, or status is not a string
-    :return: A string containing the income, status, and taxes owed
-    :rtype: str
+    :raise TypeError: Error raised if income is not a float, filing is not a list, or status is not a string
+    :return: float of total owed on income tax
+    :rtype: float
     """
     total_owed = 0.0
     try:
         for i in range(len(filing)):
-            if filing[i]["lower_bound"] < income < filing[i]["upper_bound"]:
-                tax_amount = (
-                    (income - filing[i]["upper_bound"]) * filing[i]["rate"]
-                ) * -1
-                total_owed += tax_amount
-        return f"{status}\nIncome: {income:.2f}\nTotal Owed: ${total_owed:.2f}\n"
+            if "upper_bound" not in filing[i]:
+                if filing[i]["lower_bound"] < income:
+                    tax_amount = (
+                        (income - filing[i]["lower_bound"]) * filing[i]["rate"]
+                    ) * -1
+                    total_owed += tax_amount
+            else:
+                if filing[i]["lower_bound"] < income < filing[i]["upper_bound"]:
+                    tax_amount = (
+                        (income - filing[i]["upper_bound"]) * filing[i]["rate"]
+                    ) * -1
+                    total_owed += tax_amount
+        return total_owed * -1
     except TypeError:
         print("Please provide a valid value")
 
 
 # Calculate amount owed on capital gains
-def cap_gains_calc():
-    pass
+def cap_gains_calc(capital_gains: float):
+    """
+    Calculate taxes owed on capital gains
+
+    :param capital_gains: Capital gains earned on the year
+    :type capital_gains: float
+    :raise TypeError: Error raised if capital_gains is not a float
+    :return: float of total owed on capital gains tax
+    :rtype: float
+    """
+    return capital_gains * 0.20
+
+
+# Returns message staing what the user owes
+def message_crafter(
+    income: float,
+    cap_gains: float,
+    income_owed: float,
+    cap_gains_owed: float,
+    status: str,
+):
+    """
+    Calculate the total owed in taxes and create the message the console will display to users of how much is owed
+
+    :param income: Income made, if married and filing jointly combined income
+    :type income: float
+    :param cap_gains: Capital gains earned on the year
+    :type cap_gains: float
+    :param income_owed: Taxes owed on income
+    :type income_owed: float
+    :param cap_gains_owed: Taxes owed on capital gains
+    :type cap_gains_owed: float
+    :param status: Message provided describing marital status and filing status
+    :type status: str
+    :raise TypeError: Error raised if income, cpa_gains, income_owed or cap_gains_owed are not a float, or status is not a string
+    :return: Message of what the user owes on the year, including income and capital gains made as well as filing and marital ststus
+    :rtype: str
+    """
+    total_owed = income_owed + cap_gains_owed
+    return f"{status}\nIncome: ${income:.2f}\nCapital Gains: ${cap_gains:.2f}\nTaxes on Income: ${income_owed:.2f}\nTaxes on Capital Gains: ${cap_gains_owed:.2f}\nTotal Owed: ${total_owed:.2f}\n"
 
 
 if __name__ == "__main__":
