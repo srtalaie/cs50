@@ -81,10 +81,9 @@ parser.add_argument(
     required=False,
 )
 
-args = parser.parse_args()
-
 
 def main():
+    args = parser.parse_args()
     """Calculate User Provided Tax Burden"""
     while True:
         try:
@@ -120,7 +119,7 @@ def main():
 
 
 # Calculate Tax Owed on Income
-def income_calc(income: float, filing: list) -> str:
+def income_calc(income: float, filing: list) -> float:
     """
     Calculate taxes owed on income based on status
 
@@ -137,25 +136,26 @@ def income_calc(income: float, filing: list) -> str:
     total_owed = 0.0
     try:
         for i in range(len(filing)):
+            # Catch highest bracket
             if "upper_bound" not in filing[i]:
                 if filing[i]["lower_bound"] < income:
-                    tax_amount = (
-                        (income - filing[i]["lower_bound"]) * filing[i]["rate"]
-                    ) * -1
+                    tax_amount = (income - filing[i]["lower_bound"]) * filing[i]["rate"]
                     total_owed += tax_amount
             else:
-                if filing[i]["lower_bound"] < income < filing[i]["upper_bound"]:
-                    tax_amount = (
-                        (income - filing[i]["upper_bound"]) * filing[i]["rate"]
-                    ) * -1
+                if filing[i]["upper_bound"] < income:
+                    taxable_amount = filing[i]["upper_bound"] - filing[i]["lower_bound"]
+                    tax_amount = taxable_amount * filing[i]["rate"]
                     total_owed += tax_amount
-        return total_owed * -1
+                elif filing[i]["lower_bound"] < income < filing[i]["upper_bound"]:
+                    tax_amount = (income - filing[i]["lower_bound"]) * filing[i]["rate"]
+                    total_owed += tax_amount
+        return total_owed
     except TypeError:
         print("Please provide a valid value")
 
 
 # Calculate amount owed on capital gains
-def cap_gains_calc(capital_gains: float):
+def cap_gains_calc(capital_gains: float) -> float:
     """
     Calculate taxes owed on capital gains
 
@@ -175,7 +175,7 @@ def message_crafter(
     income_owed: float,
     cap_gains_owed: float,
     status: str,
-):
+) -> str:
     """
     Calculate the total owed in taxes and create the message the console will display to users of how much is owed
 
