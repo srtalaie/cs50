@@ -1,0 +1,21 @@
+{
+  "name": "swag-labs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "pretest": "tsc --incremental -p tests/tsconfig.json",
+    "test": "playwright test -c tests-out",
+    "test:report": "npx playwright show-report",
+    "test:ui": "npx playwright test --ui"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@playwright/test": "^1.53.1",
+    "@types/node": "^24.0.3"
+  },
+  "dependencies": {
+    "dotenv": "^16.5.0"
+  }
+}
