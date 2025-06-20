@@ -9,14 +9,12 @@ const creds = {
 }
 
 setup('authenticate', async ({ page, baseURL }) => {
-  // Perform auth steps
   await page.goto('/');
-  console.log(creds);
 
-  await page.locator('#user-name').fill(creds.user_name);
-  await page.locator('#password').fill(creds.password);
+  await page.getByPlaceholder('Username').fill(creds.user_name);
+  await page.getByPlaceholder('Password').fill(creds.password);
 
-  await page.locator('#login-button').click()
+  await page.locator('input[type="submit"]').click()
 
   await page.waitForURL(`${baseURL}/inventory.html`)
 

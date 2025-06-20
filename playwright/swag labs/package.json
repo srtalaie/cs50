@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "pretest": "tsc --incremental -p tests/tsconfig.json",
-    "test": "playwright test -c tests-out",
+    "test": "npx playwright test",
     "test:report": "npx playwright show-report",
     "test:ui": "npx playwright test --ui"
   },
