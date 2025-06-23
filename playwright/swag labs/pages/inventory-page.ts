@@ -8,6 +8,7 @@ export class InventoryPage {
   readonly inventoryItem: Locator
   readonly productSort: Locator
   readonly shoppingCart: Locator
+  readonly shoppingCartBadge: Locator
   readonly burgerMenu: Locator
 
   constructor(page: Page) {
@@ -19,6 +20,7 @@ export class InventoryPage {
     this.burgerMenu = page.locator('#menu_button_container').locator('.bm-burger-button').getByRole('button')
     this.inventoryItemList = page.locator('.inventory_list')
     this.inventoryItem = page.locator('.inventory_item')
+    this.shoppingCartBadge = page.locator('.shopping_cart_badge')
   }
 
   async goTo() {
@@ -83,5 +85,10 @@ export class InventoryPage {
       await expect(this.inventoryItem.nth(i).locator('.inventory_item_price')).toBeVisible()
       await expect(this.inventoryItem.nth(i).locator('.pricebar').getByRole('button')).toHaveText('Add to cart')
     }
+  }
+
+  async addItemToCart() {
+    await this.inventoryItem.nth(0).locator('#add-to-cart-sauce-labs-backpack').click()
+    await expect(this.shoppingCartBadge).toHaveText('1')
   }
 }
