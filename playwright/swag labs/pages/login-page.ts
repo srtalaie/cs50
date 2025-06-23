@@ -10,7 +10,7 @@ export class LoginPage {
   constructor(page: Page) {
     this.page = page
     this.login_logo = page.locator('.login_logo')
-    this.username_input = page.locator('#username')
+    this.username_input = page.locator('#user-name')
     this.password_input = page.locator('#password')
     this.login_button = page.locator('#login-button')
   }
