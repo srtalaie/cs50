@@ -88,7 +88,14 @@ export class InventoryPage {
   }
 
   async addItemToCart(itemIndex: number) {
-    await this.inventoryItem.nth(itemIndex).locator('#add-to-cart-sauce-labs-backpack').click()
+    await expect(this.inventoryItem.nth(itemIndex).locator('.btn')).toHaveText('Add to cart')
+    await this.inventoryItem.nth(itemIndex).locator('.btn').click()
     await expect(this.shoppingCartBadge).toHaveText('1')
+  }
+
+  async removeItemFromCart(itemIndex: number) {
+    await expect(this.inventoryItem.nth(itemIndex).locator('.btn')).toHaveText('Remove')
+    await this.inventoryItem.nth(itemIndex).locator('.btn').click()
+    await expect(this.shoppingCartBadge).toHaveCount(0)
   }
 }
