@@ -87,8 +87,8 @@ export class InventoryPage {
     }
   }
 
-  async addItemToCart() {
-    await this.inventoryItem.nth(0).locator('#add-to-cart-sauce-labs-backpack').click()
+  async addItemToCart(itemIndex: number) {
+    await this.inventoryItem.nth(itemIndex).locator('#add-to-cart-sauce-labs-backpack').click()
     await expect(this.shoppingCartBadge).toHaveText('1')
   }
 }
