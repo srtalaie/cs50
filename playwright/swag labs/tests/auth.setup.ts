@@ -19,5 +19,4 @@ setup('authenticate', async ({ page, baseURL }) => {
   await page.waitForURL(`${baseURL}/inventory.html`)
 
   await page.context().storageState({ path: authFile })
-
 })
