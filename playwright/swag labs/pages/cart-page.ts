@@ -2,7 +2,6 @@ import { type Locator, type Page } from '@playwright/test'
 
 export class ShoppingCartPage {
   readonly page: Page
-  readonly appLogo: Locator
   readonly pageTitle: Locator
   readonly shoppingCartBadge: Locator
   readonly cartListQuantityLabel: Locator
@@ -18,7 +17,6 @@ export class ShoppingCartPage {
 
   constructor(page: Page) {
     this.page = page
-    this.appLogo = page.locator('.header_label').locator('.app_logo')
     this.pageTitle = page.locator('.header_secondary_container').locator('.title')
     this.shoppingCartBadge = page.locator('.shopping_cart_badge')
     this.cartListQuantityLabel = page.locator('.cart_list').locator('.cart_quantity_label')
