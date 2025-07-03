@@ -1,15 +1,9 @@
 import { faker } from '@faker-js/faker'
 import { expect, test as setup } from '@playwright/test'
 import path from 'path'
+import { user } from '../types'
 
 const authFile = path.join(__dirname, '../playwright/.auth/user.json')
-
-interface user {
-  firstName: string
-  lastName: string
-  email: string
-  password: string
-}
 
 const new_user: user = {
   firstName: faker.person.firstName(),
