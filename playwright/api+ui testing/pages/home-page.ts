@@ -28,13 +28,13 @@ export class HomePage {
     await expect(this.contactTable).toBeVisible()
 
     // Check header row info
-    await expect(this.contactTable.locator('contactTableHead').locator('td').locator('th').nth(0)).toBe('Name')
-    await expect(this.contactTable.locator('contactTableHead').locator('td').locator('th').nth(1)).toBe('Birthdate')
-    await expect(this.contactTable.locator('contactTableHead').locator('td').locator('th').nth(2)).toBe('Email')
-    await expect(this.contactTable.locator('contactTableHead').locator('td').locator('th').nth(3)).toBe('Phone')
-    await expect(this.contactTable.locator('contactTableHead').locator('td').locator('th').nth(4)).toBe('Address')
-    await expect(this.contactTable.locator('contactTableHead').locator('td').locator('th').nth(5)).toBe('City, State/Province, Postal Code')
-    await expect(this.contactTable.locator('contactTableHead').locator('td').locator('th').nth(6)).toBe('Country')
+    await expect(this.page.getByRole('cell', { name: 'Name' })).toBeVisible()
+    await expect(this.page.getByRole('cell', { name: 'Birthdate' })).toBeVisible()
+    await expect(this.page.getByRole('cell', { name: 'Email' })).toBeVisible()
+    await expect(this.page.getByRole('cell', { name: 'Phone' })).toBeVisible()
+    await expect(this.page.getByRole('cell', { name: 'Address' })).toBeVisible()
+    await expect(this.page.getByRole('cell', { name: 'City, State/Province, Postal Code' })).toBeVisible()
+    await expect(this.page.getByRole('cell', { name: 'Country' })).toBeVisible()
 
     // At least 1 row of contact info exists
     const rowCount = await this.contactRow.count()
@@ -42,13 +42,15 @@ export class HomePage {
 
     // Loop through all rows and verify info is correct
     for (let i = 0; i < rowCount; i++) {
-      await expect(this.contactRow.nth(i).locator('td').nth(1)).toBe(`${contact[i].firstName} ${contact[i].lastName}`)
-      await expect(this.contactRow.nth(i).locator('td').nth(2)).toBe(contact[i].birthdate)
-      await expect(this.contactRow.nth(i).locator('td').nth(3)).toBe(contact[i].email)
-      await expect(this.contactRow.nth(i).locator('td').nth(4)).toBe(contact[i].phone)
-      await expect(this.contactRow.nth(i).locator('td').nth(5)).toBe(`${contact[i].street1} ${contact[i].street2}`)
-      await expect(this.contactRow.nth(i).locator('td').nth(6)).toBe(`${contact[i].city} ${contact[i].stateProvince} ${contact[i].postalCode}`)
-      await expect(this.contactRow.nth(i).locator('td').nth(7)).toBe(contact[i].country)
+      console.log(`${contact[i].firstName} ${contact[i].lastName}`);
+
+      await expect(this.page.getByRole('cell', { name: `${contact[i].firstName} ${contact[i].lastName}` })).toBeVisible()
+      await expect(this.page.getByRole('cell', { name: contact[i].birthdate })).toBeVisible()
+      await expect(this.page.getByRole('cell', { name: contact[i].email })).toBeVisible()
+      await expect(this.page.getByRole('cell', { name: contact[i].phone })).toBeVisible()
+      await expect(this.page.getByRole('cell', { name: `${contact[i].street1} ${contact[i].street2}` })).toBeVisible()
+      await expect(this.page.getByRole('cell', { name: `${contact[i].city} ${contact[i].stateProvince} ${contact[i].postalCode}` })).toBeVisible()
+      await expect(this.page.getByRole('cell', { name: contact[i].country })).toBeVisible()
     }
   }
 }

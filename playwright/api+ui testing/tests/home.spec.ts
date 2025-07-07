@@ -1,0 +1,53 @@
+import { faker } from "@faker-js/faker"
+import { APIRequestContext, request, test } from "@playwright/test"
+import { HomePage } from "../pages/home-page"
+import { contact } from "../types"
+
+// Create a date and put it in correct format
+const randomDate = faker.date.between({ from: '1900-01-01', to: Date.now() })
+const isoFormatted = randomDate.toLocaleDateString('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' })
+const dateParts = isoFormatted.split('-')
+
+const new_contact: contact = {
+  birthdate: `${dateParts[0]}-${dateParts[2]}-${dateParts[1]}`,
+  city: faker.location.city(),
+  country: faker.location.country(),
+  email: faker.internet.email(),
+  firstName: faker.person.firstName(),
+  lastName: faker.person.lastName(),
+  phone: faker.string.numeric(10),
+  postalCode: faker.location.zipCode('#####'),
+  stateProvince: faker.location.state(),
+  street1: faker.location.streetAddress(),
+  street2: faker.location.secondaryAddress(),
+}
+
+test.describe('Home page tests', () => {
+  let homePage: any
+  let response: any
+
+  test.beforeAll(async ({ page, baseURL, browser }) => {
+    const apiContext: APIRequestContext = await request.newContext()
+    homePage = new HomePage(page)
+    const browserContext = await browser.newContext()
+    const cookies = await browserContext.cookies()
+    await homePage.goTo()
+
+    response = await apiContext.post(`${baseURL}/contacts`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${cookies[0].value}`
+      },
+      data: new_contact
+    })
+  })
+
+  test.afterAll(async ({ baseURL }) => {
+    const apiContext: APIRequestContext = await request.newContext();
+    await apiContext.delete(`${baseURL}/contacts/${response._id}`)
+  })
+
+  test.only('Contact Table displays info correctly', async () => {
+    await homePage.contactTableCheck([new_contact])
+  })
+})
