@@ -4,7 +4,7 @@ import { HomePage } from "../pages/home-page"
 import { contact } from "../types"
 
 // Create a date and put it in correct format
-const randomDate = faker.date.between({ from: '1900-01-01', to: Date.now() })
+const randomDate = faker.date.between({ from: '1980-01-01', to: Date.now() })
 const isoFormatted = randomDate.toLocaleDateString('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' })
 const dateParts = isoFormatted.split('-')
 
@@ -25,13 +25,17 @@ const new_contact: contact = {
 test.describe('Home page tests', () => {
   let homePage: any
   let response: any
+  let page: any
+  let data: any
 
-  test.beforeAll(async ({ page, baseURL, browser }) => {
+  test.beforeAll(async ({ baseURL, browser }) => {
     const apiContext: APIRequestContext = await request.newContext()
-    homePage = new HomePage(page)
     const browserContext = await browser.newContext()
+
+    page = await browserContext.newPage()
+    homePage = new HomePage(page)
+
     const cookies = await browserContext.cookies()
-    await homePage.goTo()
 
     response = await apiContext.post(`${baseURL}/contacts`, {
       headers: {
@@ -40,11 +44,15 @@ test.describe('Home page tests', () => {
       },
       data: new_contact
     })
+
+    data = await response.json()
+    await homePage.goTo()
   })
 
   test.afterAll(async ({ baseURL }) => {
-    const apiContext: APIRequestContext = await request.newContext();
-    await apiContext.delete(`${baseURL}/contacts/${response._id}`)
+    const apiContext: APIRequestContext = await request.newContext()
+    await apiContext.delete(`${baseURL}/contacts/${data._id}`)
+    await page.close()
   })
 
   test.only('Contact Table displays info correctly', async () => {

@@ -8,7 +8,7 @@ export class HomePage {
   readonly addNewContactBtn: Locator
   readonly contactTable: Locator
   readonly contactRow: Locator
-  readonly logOoutBtn: Locator
+  readonly logOutBtn: Locator
 
   constructor(page: Page) {
     this.page = page
@@ -17,7 +17,7 @@ export class HomePage {
     this.addNewContactBtn = page.getByRole('button', { name: 'Add a New Contact' })
     this.contactTable = page.getByRole('table')
     this.contactRow = page.locator('.contactTableBodyRow')
-    this.logOoutBtn = page.getByRole('button', { name: 'Logout' })
+    this.logOutBtn = page.getByRole('button', { name: 'Logout' })
   }
 
   async goTo() {
@@ -42,7 +42,7 @@ export class HomePage {
 
     // Loop through all rows and verify info is correct
     for (let i = 0; i < rowCount; i++) {
-      console.log(`${contact[i].firstName} ${contact[i].lastName}`);
+      console.log(contact[i])
 
       await expect(this.page.getByRole('cell', { name: `${contact[i].firstName} ${contact[i].lastName}` })).toBeVisible()
       await expect(this.page.getByRole('cell', { name: contact[i].birthdate })).toBeVisible()
