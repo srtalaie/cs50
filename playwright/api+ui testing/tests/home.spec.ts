@@ -57,8 +57,6 @@ test.describe('Home page tests', () => {
         'Authorization': `Bearer ${cookies[0].value}`
       }
     })
-
-    console.log('I ran: ', res)
   })
 
   test.only('Contact Table displays info correctly', async () => {

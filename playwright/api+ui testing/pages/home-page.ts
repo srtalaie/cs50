@@ -41,16 +41,14 @@ export class HomePage {
     expect(rowCount).toBeGreaterThan(0)
 
     // Loop through all rows and verify info is correct
-    for (let i = 0; i < rowCount; i++) {
-      console.log('Contact in array: ', contacts[i], i)
-
-      await expect(this.page.getByRole('cell', { name: `${contacts[i].firstName} ${contacts[i].lastName}` })).toBeVisible()
-      await expect(this.page.getByRole('cell', { name: contacts[i].birthdate })).toBeVisible()
-      await expect(this.page.getByRole('cell', { name: contacts[i].email })).toBeVisible()
-      await expect(this.page.getByRole('cell', { name: contacts[i].phone })).toBeVisible()
-      await expect(this.page.getByRole('cell', { name: `${contacts[i].street1} ${contacts[i].street2}` })).toBeVisible()
-      await expect(this.page.getByRole('cell', { name: `${contacts[i].city} ${contacts[i].stateProvince} ${contacts[i].postalCode}` })).toBeVisible()
-      await expect(this.page.getByRole('cell', { name: contacts[i].country })).toBeVisible()
-    }
+    contacts.forEach(async (contact) => {
+      await expect(this.page.getByRole('cell', { name: `${contact.firstName} ${contact.lastName}` })).toBeVisible()
+      await expect(this.page.getByRole('cell', { name: contact.birthdate })).toBeVisible()
+      await expect(this.page.getByRole('cell', { name: contact.email })).toBeVisible()
+      await expect(this.page.getByRole('cell', { name: contact.phone })).toBeVisible()
+      await expect(this.page.getByRole('cell', { name: `${contact.street1} ${contact.street2}` })).toBeVisible()
+      await expect(this.page.getByRole('cell', { name: `${contact.city} ${contact.stateProvince} ${contact.postalCode}` })).toBeVisible()
+      await expect(this.page.getByRole('cell', { name: contact.country })).toBeVisible()
+    })
   }
 }
