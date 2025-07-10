@@ -29,7 +29,7 @@ test.describe('Home page tests', () => {
   let data: any
   let cookies: any
 
-  test.beforeAll(async ({ baseURL, browser }) => {
+  test.beforeEach(async ({ baseURL, browser }) => {
     const apiContext: APIRequestContext = await request.newContext()
     const browserContext = await browser.newContext()
 
@@ -50,7 +50,7 @@ test.describe('Home page tests', () => {
     await homePage.goTo()
   })
 
-  test.afterAll(async ({ baseURL }) => {
+  test.afterEach(async ({ baseURL }) => {
     const apiContext: APIRequestContext = await request.newContext()
     const res = await apiContext.delete(`${baseURL}/contacts/${data._id}`, {
       headers: {
