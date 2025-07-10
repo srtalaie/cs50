@@ -24,7 +24,7 @@ export class HomePage {
     await this.page.goto('https://thinking-tester-contact-list.herokuapp.com/contactList')
   }
 
-  async contactTableCheck(contact: contact[]) {
+  async contactTableCheck(contacts: contact[]) {
     await expect(this.contactTable).toBeVisible()
 
     // Check header row info
@@ -42,15 +42,15 @@ export class HomePage {
 
     // Loop through all rows and verify info is correct
     for (let i = 0; i < rowCount; i++) {
-      console.log(contact[i])
+      console.log('Contact in array: ', contacts[i], i)
 
-      await expect(this.page.getByRole('cell', { name: `${contact[i].firstName} ${contact[i].lastName}` })).toBeVisible()
-      await expect(this.page.getByRole('cell', { name: contact[i].birthdate })).toBeVisible()
-      await expect(this.page.getByRole('cell', { name: contact[i].email })).toBeVisible()
-      await expect(this.page.getByRole('cell', { name: contact[i].phone })).toBeVisible()
-      await expect(this.page.getByRole('cell', { name: `${contact[i].street1} ${contact[i].street2}` })).toBeVisible()
-      await expect(this.page.getByRole('cell', { name: `${contact[i].city} ${contact[i].stateProvince} ${contact[i].postalCode}` })).toBeVisible()
-      await expect(this.page.getByRole('cell', { name: contact[i].country })).toBeVisible()
+      await expect(this.page.getByRole('cell', { name: `${contacts[i].firstName} ${contacts[i].lastName}` })).toBeVisible()
+      await expect(this.page.getByRole('cell', { name: contacts[i].birthdate })).toBeVisible()
+      await expect(this.page.getByRole('cell', { name: contacts[i].email })).toBeVisible()
+      await expect(this.page.getByRole('cell', { name: contacts[i].phone })).toBeVisible()
+      await expect(this.page.getByRole('cell', { name: `${contacts[i].street1} ${contacts[i].street2}` })).toBeVisible()
+      await expect(this.page.getByRole('cell', { name: `${contacts[i].city} ${contacts[i].stateProvince} ${contacts[i].postalCode}` })).toBeVisible()
+      await expect(this.page.getByRole('cell', { name: contacts[i].country })).toBeVisible()
     }
   }
 }

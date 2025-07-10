@@ -9,7 +9,7 @@ const isoFormatted = randomDate.toLocaleDateString('en-CA', { year: 'numeric', m
 const dateParts = isoFormatted.split('-')
 
 const new_contact: contact = {
-  birthdate: `${dateParts[0]}-${dateParts[2]}-${dateParts[1]}`,
+  birthdate: `${dateParts[0]}-${dateParts[1]}-${dateParts[2]}`,
   city: faker.location.city(),
   country: faker.location.country(),
   email: faker.internet.email(),
@@ -27,6 +27,7 @@ test.describe('Home page tests', () => {
   let response: any
   let page: any
   let data: any
+  let cookies: any
 
   test.beforeAll(async ({ baseURL, browser }) => {
     const apiContext: APIRequestContext = await request.newContext()
@@ -35,7 +36,7 @@ test.describe('Home page tests', () => {
     page = await browserContext.newPage()
     homePage = new HomePage(page)
 
-    const cookies = await browserContext.cookies()
+    cookies = await browserContext.cookies()
 
     response = await apiContext.post(`${baseURL}/contacts`, {
       headers: {
@@ -51,11 +52,17 @@ test.describe('Home page tests', () => {
 
   test.afterAll(async ({ baseURL }) => {
     const apiContext: APIRequestContext = await request.newContext()
-    await apiContext.delete(`${baseURL}/contacts/${data._id}`)
-    await page.close()
+    const res = await apiContext.delete(`${baseURL}/contacts/${data._id}`, {
+      headers: {
+        'Authorization': `Bearer ${cookies[0].value}`
+      }
+    })
+
+    console.log('I ran: ', res)
   })
 
   test.only('Contact Table displays info correctly', async () => {
     await homePage.contactTableCheck([new_contact])
   })
 })
+
