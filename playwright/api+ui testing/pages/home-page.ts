@@ -51,4 +51,14 @@ export class HomePage {
       await expect(this.page.getByRole('cell', { name: contact.country })).toBeVisible()
     })
   }
+
+  async goToAddNewContact() {
+    await this.addNewContactBtn.click()
+    await expect(this.page).toHaveTitle('Add Contact')
+  }
+
+  async logOut() {
+    await this.logOutBtn.click()
+    await expect(this.page).toHaveTitle('Contact List App')
+  }
 }

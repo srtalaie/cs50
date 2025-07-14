@@ -52,15 +52,23 @@ test.describe('Home page tests', () => {
 
   test.afterEach(async ({ baseURL }) => {
     const apiContext: APIRequestContext = await request.newContext()
-    const res = await apiContext.delete(`${baseURL}/contacts/${data._id}`, {
+    await apiContext.delete(`${baseURL}/contacts/${data._id}`, {
       headers: {
         'Authorization': `Bearer ${cookies[0].value}`
       }
     })
   })
 
-  test.only('Contact Table displays info correctly', async () => {
+  test('Contact Table displays info correctly', async () => {
     await homePage.contactTableCheck([new_contact])
+  })
+
+  test('Clicking Add a new contact goes to add contact page', async () => {
+    await homePage.goToAddNewContact()
+  })
+
+  test('Clicking logout takes user to main app page', async () => {
+    await homePage.logOut()
   })
 })
 
