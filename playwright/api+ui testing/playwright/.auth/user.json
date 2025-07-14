@@ -2,10 +2,10 @@
   "cookies": [
     {
       "name": "token",
-      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODZkOTc2ZTFkZDRkNjAwMTVlZDJiYzkiLCJpYXQiOjE3NTIxODYwMzB9.zue9ObOUvfVT1sj7juucH0FBmMZX_iM5bbclXHosROo",
+      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODZkOTc2ZTFkZDRkNjAwMTVlZDJiYzkiLCJpYXQiOjE3NTI1MzE2MTZ9.UPL7P8owuOulbAcOd0DAjcvt7JIrb5hXxQpyBTSakRQ",
       "domain": "thinking-tester-contact-list.herokuapp.com",
       "path": "/",
-      "expires": 1752222030.59125,
+      "expires": 1752567616.760341,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Lax"
